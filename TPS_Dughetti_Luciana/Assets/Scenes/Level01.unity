@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 84062038}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0, y: 1.25, z: -2}
+  m_LocalPosition: {x: 0.75, y: 2.25, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -534,6 +534,8 @@ MonoBehaviour:
   moveSpeedParam: move_speed
   directionXParam: dir_x
   directionZParam: dir_z
+  isAimingParam: is_aiming
+  isAttackingParam: is_attacking
 --- !u!1 &328311728
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +596,7 @@ Transform:
   m_Children:
   - {fileID: 284401053}
   - {fileID: 1875580700}
+  - {fileID: 1579846300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &328311731
@@ -610,7 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 328311729}
   movementSpeed: 2
-  reduceMovementMultiplier: 2
+  reduceMovementDivisor: 3
   groundMask:
     serializedVersion: 2
     m_Bits: 8
@@ -630,6 +633,7 @@ MonoBehaviour:
   inputReader: {fileID: 2059489281}
   playerMovement: {fileID: 328311731}
   playerView: {fileID: 284401054}
+  playerCombat: {fileID: 1579846301}
 --- !u!1001 &648472560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -747,6 +751,50 @@ Transform:
   - {fileID: 266931142}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1579846299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1579846300}
+  - component: {fileID: 1579846301}
+  m_Layer: 0
+  m_Name: Combat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1579846300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579846299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 328311730}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1579846301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579846299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c37dcff32cab9647b7358a7a57a333c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1875580699
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,7 +919,19 @@ MonoBehaviour:
     m_ActionId: 541b2b83-112d-478d-b115-691175fd858d
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2059489281}
+        m_TargetAssemblyTypeName: InputReader, Assembly-CSharp
+        m_MethodName: HandleAttackInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: bc052dc2-571a-4dfe-8c1e-e32d9fa2858f
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -929,6 +989,22 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: dbb909dd-73e5-4e36-9ae0-62882929dbef
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2059489281}
+        m_TargetAssemblyTypeName: InputReader, Assembly-CSharp
+        m_MethodName: HandleAimInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 73f80d44-0eaf-46c7-88b1-65bd3a0442b6
     m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 

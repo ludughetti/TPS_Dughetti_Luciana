@@ -7,7 +7,11 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private string moveSpeedParam = "move_speed";
     [SerializeField] private string directionXParam = "dir_x";
     [SerializeField] private string directionZParam = "dir_z";
+    [SerializeField] private string isAimingParam = "is_aiming";
+    [SerializeField] private string isAttackingParam = "is_attacking";
 
+    private bool _isAiming = false;
+    private bool _isAttacking = false;
     private float _movementTypeSpeed = 0f;
     private Vector2 _currentDirection = Vector2.zero;
     private Vector2 _nextDirection = Vector2.zero;
@@ -17,6 +21,7 @@ public class PlayerView : MonoBehaviour
     {
         SmoothMovementValues();
         SetMovementAnimations();
+        SetWeaponAnimations();
     }
 
     public void SetMovementDirection(Vector2 input)
@@ -27,6 +32,16 @@ public class PlayerView : MonoBehaviour
     public void SetMovementType(MovementType type)
     {
         _movementTypeSpeed = type.GetMovementSpeed();
+    }
+
+    public void SetIsAiming(bool isAiming)
+    {
+        _isAiming = isAiming;
+    }
+
+    public void SetIsAttacking(bool isAttacking)
+    {
+        _isAttacking = isAttacking;
     }
 
     private void SetMovementAnimations()
@@ -82,5 +97,11 @@ public class PlayerView : MonoBehaviour
             if (_currentDirection.y <= _nextDirection.y)
                 _previousDirection.y = _nextDirection.y;
         }
+    }
+
+    private void SetWeaponAnimations()
+    {
+        animator.SetBool(isAimingParam, _isAiming);
+        animator.SetBool(isAttackingParam, _isAttacking);
     }
 }

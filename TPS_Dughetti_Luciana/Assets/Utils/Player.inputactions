@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "dbb909dd-73e5-4e36-9ae0-62882929dbef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "541b2b83-112d-478d-b115-691175fd858d",
@@ -24,18 +33,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
+                    "name": "Aim",
                     "type": "Button",
-                    "id": "bc052dc2-571a-4dfe-8c1e-e32d9fa2858f",
+                    "id": "73f80d44-0eaf-46c7-88b1-65bd3a0442b6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sprint",
+                    "name": "Fire",
                     "type": "Button",
-                    "id": "dbb909dd-73e5-4e36-9ae0-62882929dbef",
+                    "id": "bc052dc2-571a-4dfe-8c1e-e32d9fa2858f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -271,6 +280,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e440374-cf0d-452e-957f-d4914796d6c9",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
