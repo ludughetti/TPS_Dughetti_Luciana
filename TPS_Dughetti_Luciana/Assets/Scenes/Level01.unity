@@ -530,12 +530,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 648472562}
+  playerController: {fileID: 328311732}
   animationSpeed: 4
   moveSpeedParam: move_speed
   directionXParam: dir_x
   directionZParam: dir_z
-  isAimingParam: is_aiming
   isAttackingParam: is_attacking
+  weaponTypeParam: weapon_type
 --- !u!1 &328311728
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 328311729}
+  playerController: {fileID: 328311732}
   movementSpeed: 2
   reduceMovementDivisor: 3
   groundMask:
@@ -630,9 +632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01aa7811f79928c49a6edfd342781b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 2059489281}
-  playerMovement: {fileID: 328311731}
-  playerView: {fileID: 284401054}
   playerCombat: {fileID: 1579846301}
 --- !u!1001 &648472560
 PrefabInstance:
@@ -795,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c37dcff32cab9647b7358a7a57a333c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 328311732}
 --- !u!1 &1875580699
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,6 +857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f8bd7dc5e31a43a73bd52c742f87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 328311732}
 --- !u!4 &2059489282
 Transform:
   m_ObjectHideFlags: 0
@@ -1006,6 +1007,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 73f80d44-0eaf-46c7-88b1-65bd3a0442b6
     m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2059489281}
+        m_TargetAssemblyTypeName: InputReader, Assembly-CSharp
+        m_MethodName: HandleMeleeWeaponInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5430c61d-70a1-4fa9-9174-3a5ae65d3a6a
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2059489281}
+        m_TargetAssemblyTypeName: InputReader, Assembly-CSharp
+        m_MethodName: HandlePistolWeaponInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 27aa995b-f3fe-4f84-904f-1d1d1520a5a6
+    m_ActionName: Player/Melee Weapon1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2059489281}
+        m_TargetAssemblyTypeName: InputReader, Assembly-CSharp
+        m_MethodName: HandleRifleWeaponInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ab162e8b-4674-488b-b279-4c4004084166
+    m_ActionName: Player/Melee Weapon2[/Keyboard/1]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

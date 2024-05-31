@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private float movementSpeed = 2f;
     [SerializeField] private float reduceMovementDivisor = 2f;
     [SerializeField] private LayerMask groundMask;
@@ -14,6 +14,18 @@ public class PlayerMovement : MonoBehaviour
     private MovementType _movementType = MovementType.Walk;
     private bool _isGrounded = false;
     private float _verticalVelocity = 0f;
+
+    private void OnEnable()
+    {
+        playerController.OnMovementInput += SetMovement;
+        playerController.OnMovementTypeChangeInput += SetMovementType;
+    }
+
+    private void OnDisable()
+    {
+        playerController.OnMovementInput -= SetMovement;
+        playerController.OnMovementTypeChangeInput -= SetMovementType;
+    }
 
     private void Start()
     {
@@ -27,10 +39,10 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
-    public void SetMovement(Vector3 input)
+    public void SetMovement(Vector2 input)
     {
         // Set direction
-        _moveDirection = input;
+        _moveDirection = new Vector3(input.x, 0f, input.y);
 
         // Calculate movement speed depending on direction
         GetSpeedByDirection();

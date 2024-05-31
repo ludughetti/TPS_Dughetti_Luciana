@@ -1,17 +1,13 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour
 {
-    public event Action<Vector2> OnMovementInput = delegate { };
-    public event Action<MovementType> OnMovementTypeChangeInput = delegate { };
-    public event Action<bool> OnAimInput = delegate { };
-    public event Action<bool> OnAttackInput = delegate { };
+    [SerializeField] private PlayerController playerController;
 
     public void HandleMovementInput(InputAction.CallbackContext context)
     {
-        OnMovementInput.Invoke(context.ReadValue<Vector2>());
+        playerController.HandleMovementInput(context.ReadValue<Vector2>());
     }
 
     public void HandleSprintToggleInput(InputAction.CallbackContext context)
@@ -19,11 +15,11 @@ public class InputReader : MonoBehaviour
         if (context.performed)
         {
             Debug.Log($"{name}: Sprint triggered.");
-            OnMovementTypeChangeInput.Invoke(MovementType.Run);
+            playerController.HandleMovementTypeChangeInput(MovementType.Run);
         } else if (context.canceled)
         {
             Debug.Log($"{name}: Sprint trigger finished, returning to Walk.");
-            OnMovementTypeChangeInput.Invoke(MovementType.Walk);
+            playerController.HandleMovementTypeChangeInput(MovementType.Walk);
         }
     }
 
@@ -32,11 +28,11 @@ public class InputReader : MonoBehaviour
         if(context.performed)
         {
             Debug.Log($"{name}: Aim triggered.");
-            OnAimInput.Invoke(true);
+            playerController.HandleAimInput(true);
         } else if (context.canceled)
         {
             Debug.Log($"{name}: Aim trigger finished, returning to Idle.");
-            OnAimInput.Invoke(false);
+            playerController.HandleAimInput(false);
         }
     }
 
@@ -45,12 +41,39 @@ public class InputReader : MonoBehaviour
         if (context.performed)
         {
             Debug.Log($"{name}: Attack triggered.");
-            OnAttackInput.Invoke(true);
+            playerController.HandleAttackInput(true);
         }
         else if (context.canceled)
         {
             Debug.Log($"{name}: Attack trigger finished, returning to Idle or Aim.");
-            OnAttackInput.Invoke(false);
+            playerController.HandleAttackInput(false);
+        }
+    }
+
+    public void HandleMeleeWeaponInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log($"{name}: Changing to melee weapon.");
+            playerController.HandleWeaponChange(WeaponType.Melee);
+        }
+    }
+
+    public void HandlePistolWeaponInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log($"{name}: Changing to pistol weapon.");
+            playerController.HandleWeaponChange(WeaponType.Pistol);
+        }
+    }
+
+    public void HandleRifleWeaponInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log($"{name}: Changing to rifle weapon.");
+            playerController.HandleWeaponChange(WeaponType.Rifle);
         }
     }
 }

@@ -3,25 +3,41 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private float animationSpeed = 4f;
     [SerializeField] private string moveSpeedParam = "move_speed";
     [SerializeField] private string directionXParam = "dir_x";
     [SerializeField] private string directionZParam = "dir_z";
-    [SerializeField] private string isAimingParam = "is_aiming";
     [SerializeField] private string isAttackingParam = "is_attacking";
+    [SerializeField] private string weaponTypeParam = "weapon_type";
 
-    private bool _isAiming = false;
     private bool _isAttacking = false;
     private float _movementTypeSpeed = 0f;
     private Vector2 _currentDirection = Vector2.zero;
     private Vector2 _nextDirection = Vector2.zero;
     private Vector2 _previousDirection = Vector2.zero;
 
+    private void OnEnable()
+    {
+        playerController.OnMovementInput += SetMovementDirection;
+        playerController.OnMovementTypeChangeInput += SetMovementType;
+        playerController.OnWeaponChangeInput += ChangeWeapon;
+        playerController.OnAttackInput += SetIsAttacking;
+    }
+
+    private void OnDisable()
+    {
+        playerController.OnMovementInput -= SetMovementDirection;
+        playerController.OnMovementTypeChangeInput -= SetMovementType;
+        playerController.OnWeaponChangeInput -= ChangeWeapon;
+        playerController.OnAttackInput -= SetIsAttacking;
+    }
+
     private void Update()
     {
-        SmoothMovementValues();
+        SmoothAnimationTransitions();
         SetMovementAnimations();
-        SetWeaponAnimations();
+        SetAttackAnimation();
     }
 
     public void SetMovementDirection(Vector2 input)
@@ -32,11 +48,6 @@ public class PlayerView : MonoBehaviour
     public void SetMovementType(MovementType type)
     {
         _movementTypeSpeed = type.GetMovementSpeed();
-    }
-
-    public void SetIsAiming(bool isAiming)
-    {
-        _isAiming = isAiming;
     }
 
     public void SetIsAttacking(bool isAttacking)
@@ -51,6 +62,22 @@ public class PlayerView : MonoBehaviour
         animator.SetFloat(directionZParam, _currentDirection.y);
     }
 
+    private void SetAttackAnimation()
+    {
+        animator.SetBool(isAttackingParam, _isAttacking);
+    }
+
+    private void ChangeWeapon(WeaponType weapon)
+    {
+        animator.SetInteger(weaponTypeParam, weapon.GetAnimStateIndex());
+    }
+
+    private void SmoothAnimationTransitions()
+    {
+        SmoothMovementValues(ref _nextDirection.x, ref _previousDirection.x, ref _currentDirection.x);
+        SmoothMovementValues(ref _nextDirection.y, ref _previousDirection.y, ref _currentDirection.y);
+    }
+
     /*
      * This method lerps input(X,Y) values between changes to smooth animation transitions.
      * If a change comes from a negative position (e.g. [-1,0]) to a positive one (e.g. [1,0]), 
@@ -63,45 +90,23 @@ public class PlayerView : MonoBehaviour
      * 
      * This is calculated both for input.x as well as input.y.
      */
-    private void SmoothMovementValues()
+    private void SmoothMovementValues(ref float nextValue, ref float previousValue, ref float currentValue)
     {
 
         // Lerp on X depending in which direction we're moving
-        if (_nextDirection.x > _previousDirection.x)
+        if (nextValue > previousValue)
         {
-            _currentDirection.x += Time.deltaTime * animationSpeed;
-            _currentDirection.x = Mathf.Clamp(_currentDirection.x, _previousDirection.x, _nextDirection.x);
-            if (_currentDirection.x >= _nextDirection.x)
-                _previousDirection.x = _nextDirection.x;
+            currentValue += Time.deltaTime * animationSpeed;
+            currentValue = Mathf.Clamp(currentValue, previousValue, nextValue);
+            if (currentValue >= nextValue)
+                previousValue = nextValue;
         }
-        else if (_nextDirection.x < _previousDirection.x)
+        else if (nextValue < previousValue)
         {
-            _currentDirection.x -= Time.deltaTime * animationSpeed;
-            _currentDirection.x = Mathf.Clamp(_currentDirection.x, _nextDirection.x, _previousDirection.x);
-            if (_currentDirection.x <= _nextDirection.x)
-                _previousDirection.x = _nextDirection.x;
+            currentValue -= Time.deltaTime * animationSpeed;
+            currentValue = Mathf.Clamp(currentValue, nextValue, previousValue);
+            if (currentValue <= nextValue)
+                previousValue = nextValue;
         }
-
-        // Lerp on Y depending in which direction we're moving
-        if (_nextDirection.y > _previousDirection.y)
-        {
-            _currentDirection.y += Time.deltaTime * animationSpeed;
-            _currentDirection.y = Mathf.Clamp(_currentDirection.y, _previousDirection.y, _nextDirection.y);
-            if (_currentDirection.y >= _nextDirection.y)
-                _previousDirection.y = _nextDirection.y;
-        }
-        else if (_nextDirection.y < _previousDirection.y)
-        {
-            _currentDirection.y -= Time.deltaTime * animationSpeed;
-            _currentDirection.y = Mathf.Clamp(_currentDirection.y, _nextDirection.y, _previousDirection.y);
-            if (_currentDirection.y <= _nextDirection.y)
-                _previousDirection.y = _nextDirection.y;
-        }
-    }
-
-    private void SetWeaponAnimations()
-    {
-        animator.SetBool(isAimingParam, _isAiming);
-        animator.SetBool(isAttackingParam, _isAttacking);
     }
 }

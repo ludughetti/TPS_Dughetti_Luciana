@@ -1,50 +1,39 @@
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private InputReader inputReader;
-    [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private PlayerView playerView;
     [SerializeField] private PlayerCombat playerCombat;
 
-    private void OnEnable()
+    public event Action<Vector2> OnMovementInput = delegate { };
+    public event Action<MovementType> OnMovementTypeChangeInput = delegate { };
+    public event Action<WeaponType> OnWeaponChangeInput = delegate { };
+    public event Action<bool> OnAimInput = delegate { };
+    public event Action<bool> OnAttackInput = delegate { };
+
+    public void HandleMovementInput(Vector2 input)
     {
-        inputReader.OnMovementInput += HandleMovementInput;
-        inputReader.OnMovementTypeChangeInput += HandleMovementTypeChangeInput;
-        inputReader.OnAimInput += HandleAimInput;
-        inputReader.OnAttackInput += HandleAttackInput;
+        OnMovementInput.Invoke(input);
     }
 
-    private void OnDisable()
+    public void HandleMovementTypeChangeInput(MovementType type)
     {
-        inputReader.OnMovementInput -= HandleMovementInput;
-        inputReader.OnMovementTypeChangeInput -= HandleMovementTypeChangeInput;
-        inputReader.OnAimInput -= HandleAimInput;
-        inputReader.OnAttackInput -= HandleAttackInput;
+        OnMovementTypeChangeInput.Invoke(type);
     }
 
-    private void HandleMovementInput(Vector2 input)
+    public void HandleAimInput(bool isAiming)
     {
-        playerMovement.SetMovement(new Vector3(input.x, 0f, input.y));
-        playerView.SetMovementDirection(input);
+        OnAimInput.Invoke(isAiming);
     }
 
-    private void HandleMovementTypeChangeInput(MovementType type)
+    public void HandleAttackInput(bool isAttacking)
     {
-        playerMovement.SetMovementType(type);
-        playerView.SetMovementType(type);
+        OnAttackInput.Invoke(isAttacking);
     }
 
-    private void HandleAimInput(bool isAiming)
+    public void HandleWeaponChange(WeaponType weapon)
     {
-        playerView.SetIsAiming(isAiming);
-    }
-
-    private void HandleAttackInput(bool isAttacking)
-    {
-        playerCombat.Attack();
-        playerView.SetIsAttacking(isAttacking);
+        if (playerCombat.CanSwitchWeapon(weapon))
+            OnWeaponChangeInput.Invoke(weapon);
     }
 }
