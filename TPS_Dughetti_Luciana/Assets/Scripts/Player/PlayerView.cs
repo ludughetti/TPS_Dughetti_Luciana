@@ -8,10 +8,9 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private string moveSpeedParam = "move_speed";
     [SerializeField] private string directionXParam = "dir_x";
     [SerializeField] private string directionZParam = "dir_z";
-    [SerializeField] private string isAttackingParam = "is_attacking";
+    [SerializeField] private string attackParam = "attack";
     [SerializeField] private string weaponTypeParam = "weapon_type";
 
-    private bool _isAttacking = false;
     private float _movementTypeSpeed = 0f;
     private Vector2 _currentDirection = Vector2.zero;
     private Vector2 _nextDirection = Vector2.zero;
@@ -22,7 +21,7 @@ public class PlayerView : MonoBehaviour
         playerController.OnMovementInput += SetMovementDirection;
         playerController.OnMovementTypeChangeInput += SetMovementType;
         playerController.OnWeaponChangeInput += ChangeWeapon;
-        playerController.OnAttackInput += SetIsAttacking;
+        playerController.OnAttackInput += TriggerIsAttacking;
     }
 
     private void OnDisable()
@@ -30,14 +29,13 @@ public class PlayerView : MonoBehaviour
         playerController.OnMovementInput -= SetMovementDirection;
         playerController.OnMovementTypeChangeInput -= SetMovementType;
         playerController.OnWeaponChangeInput -= ChangeWeapon;
-        playerController.OnAttackInput -= SetIsAttacking;
+        playerController.OnAttackInput -= TriggerIsAttacking;
     }
 
     private void Update()
     {
         SmoothAnimationTransitions();
         SetMovementAnimations();
-        SetAttackAnimation();
     }
 
     public void SetMovementDirection(Vector2 input)
@@ -50,9 +48,14 @@ public class PlayerView : MonoBehaviour
         _movementTypeSpeed = type.GetMovementSpeed();
     }
 
-    public void SetIsAttacking(bool isAttacking)
+    public void TriggerIsAttacking()
     {
-        _isAttacking = isAttacking;
+        animator.SetBool(attackParam, true);
+    }
+
+    public void EnableMovementAfterAttack()
+    {
+        playerController.ToggleCanPlayerDoActions(true);
     }
 
     private void SetMovementAnimations()
@@ -62,14 +65,9 @@ public class PlayerView : MonoBehaviour
         animator.SetFloat(directionZParam, _currentDirection.y);
     }
 
-    private void SetAttackAnimation()
+    private void ChangeWeapon(int index)
     {
-        animator.SetBool(isAttackingParam, _isAttacking);
-    }
-
-    private void ChangeWeapon(WeaponType weapon)
-    {
-        animator.SetInteger(weaponTypeParam, weapon.GetAnimStateIndex());
+        animator.SetInteger(weaponTypeParam, index);
     }
 
     private void SmoothAnimationTransitions()

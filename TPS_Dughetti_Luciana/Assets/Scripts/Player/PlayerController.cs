@@ -7,33 +7,49 @@ public class PlayerController : MonoBehaviour
 
     public event Action<Vector2> OnMovementInput = delegate { };
     public event Action<MovementType> OnMovementTypeChangeInput = delegate { };
-    public event Action<WeaponType> OnWeaponChangeInput = delegate { };
+    public event Action<int> OnWeaponChangeInput = delegate { };
     public event Action<bool> OnAimInput = delegate { };
-    public event Action<bool> OnAttackInput = delegate { };
+    public event Action OnAttackInput = delegate { };
+
+    private bool _canPlayerDoActions = true;
 
     public void HandleMovementInput(Vector2 input)
     {
-        OnMovementInput.Invoke(input);
+        if(_canPlayerDoActions)
+            OnMovementInput.Invoke(input);
     }
 
     public void HandleMovementTypeChangeInput(MovementType type)
     {
-        OnMovementTypeChangeInput.Invoke(type);
+        if (_canPlayerDoActions)
+            OnMovementTypeChangeInput.Invoke(type);
     }
 
     public void HandleAimInput(bool isAiming)
     {
-        OnAimInput.Invoke(isAiming);
+        if (_canPlayerDoActions)
+            OnAimInput.Invoke(isAiming);
     }
 
-    public void HandleAttackInput(bool isAttacking)
+    public void HandleAttackInput()
     {
-        OnAttackInput.Invoke(isAttacking);
+        if (_canPlayerDoActions)
+            OnAttackInput.Invoke();
     }
 
-    public void HandleWeaponChange(WeaponType weapon)
+    public void HandleWeaponChange(int index)
     {
-        if (playerCombat.CanSwitchWeapon(weapon))
-            OnWeaponChangeInput.Invoke(weapon);
+        if (_canPlayerDoActions && playerCombat.CanSwitchWeapon(index))
+            OnWeaponChangeInput.Invoke(index);
+    }
+
+    public bool CanPlayerDoActions()
+    {
+        return _canPlayerDoActions;
+    }
+
+    public void ToggleCanPlayerDoActions(bool canPlayerDoActions)
+    {
+        _canPlayerDoActions = canPlayerDoActions;
     }
 }

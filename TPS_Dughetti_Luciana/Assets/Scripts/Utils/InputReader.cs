@@ -12,7 +12,7 @@ public class InputReader : MonoBehaviour
 
     public void HandleSprintToggleInput(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             Debug.Log($"{name}: Sprint triggered.");
             playerController.HandleMovementTypeChangeInput(MovementType.Run);
@@ -25,7 +25,7 @@ public class InputReader : MonoBehaviour
 
     public void HandleAimInput(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.started)
         {
             Debug.Log($"{name}: Aim triggered.");
             playerController.HandleAimInput(true);
@@ -38,15 +38,10 @@ public class InputReader : MonoBehaviour
 
     public void HandleAttackInput(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             Debug.Log($"{name}: Attack triggered.");
-            playerController.HandleAttackInput(true);
-        }
-        else if (context.canceled)
-        {
-            Debug.Log($"{name}: Attack trigger finished, returning to Idle or Aim.");
-            playerController.HandleAttackInput(false);
+            playerController.HandleAttackInput();
         }
     }
 
@@ -55,7 +50,7 @@ public class InputReader : MonoBehaviour
         if (context.started)
         {
             Debug.Log($"{name}: Changing to melee weapon.");
-            playerController.HandleWeaponChange(WeaponType.Melee);
+            playerController.HandleWeaponChange((int) WeaponType.Melee);
         }
     }
 
@@ -64,7 +59,7 @@ public class InputReader : MonoBehaviour
         if (context.started)
         {
             Debug.Log($"{name}: Changing to pistol weapon.");
-            playerController.HandleWeaponChange(WeaponType.Pistol);
+            playerController.HandleWeaponChange((int) WeaponType.Pistol);
         }
     }
 
@@ -73,7 +68,7 @@ public class InputReader : MonoBehaviour
         if (context.started)
         {
             Debug.Log($"{name}: Changing to rifle weapon.");
-            playerController.HandleWeaponChange(WeaponType.Rifle);
+            playerController.HandleWeaponChange((int) WeaponType.Rifle);
         }
     }
 }

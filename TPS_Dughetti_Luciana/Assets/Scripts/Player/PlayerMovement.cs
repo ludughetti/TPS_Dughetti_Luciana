@@ -36,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
     {
         IsGrounded();
 
-        MovePlayer();
+        if (playerController.CanPlayerDoActions())
+            MovePlayer();
     }
 
     public void SetMovement(Vector2 input)
