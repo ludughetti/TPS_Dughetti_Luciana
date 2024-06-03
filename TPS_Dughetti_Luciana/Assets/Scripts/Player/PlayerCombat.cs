@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private LayerMask enemy;
     [SerializeField] private List<Weapon> weapons;
 
     private Weapon _activeWeapon;
@@ -22,6 +23,11 @@ public class PlayerCombat : MonoBehaviour
         playerController.OnAttackInput -= Attack;
     }
 
+    public bool CanSwitchWeapon(int weaponIndex)
+    {
+        return _activeWeapon.GetIndex() != weaponIndex;
+    }
+
     public void SwitchWeapon(int index)
     {
         Debug.Log($"Old weapon is {_activeWeapon}, new weapon is {weapons[index - 1]}");
@@ -31,22 +37,28 @@ public class PlayerCombat : MonoBehaviour
         _activeWeapon.TogglePrefab(true);
     }
 
-    public void Attack()
-    {
-        _activeWeapon.Attack();
-
-        // Block movement until attack is finished
-        if (_activeWeapon.DoAttackPause())
-            playerController.ToggleCanPlayerDoActions(false);
-    }
-
     public void Aim()
     {
         _activeWeapon.Aim();
     }
 
-    public bool CanSwitchWeapon(int weaponIndex)
+    public void Attack()
     {
-        return _activeWeapon.GetIndex() != weaponIndex;
+        // Block movement until attack is finished
+        if (_activeWeapon.DoAttackPause())
+            playerController.ToggleCanPlayerDoActions(false);
+
+        Debug.Log("Combat attack triggered");
+        _activeWeapon.Attack(enemy, out var targetHit);
+
+        Debug.Log("Combat damage enemy triggered");
+        if (targetHit != null)
+            DamageEnemy(targetHit);
+    }
+
+    private void DamageEnemy(GameObject targetHit)
+    {
+        if (targetHit.TryGetComponent<CharacterHealth>(out var targetHealth))
+            targetHealth.TakeDamage(_activeWeapon.GetWeaponDamage());
     }
 }

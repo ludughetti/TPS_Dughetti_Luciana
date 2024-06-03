@@ -21,7 +21,7 @@ public class PlayerView : MonoBehaviour
         playerController.OnMovementInput += SetMovementDirection;
         playerController.OnMovementTypeChangeInput += SetMovementType;
         playerController.OnWeaponChangeInput += ChangeWeapon;
-        playerController.OnAttackInput += TriggerIsAttacking;
+        playerController.OnAttackInput += TriggerAttack;
     }
 
     private void OnDisable()
@@ -29,7 +29,7 @@ public class PlayerView : MonoBehaviour
         playerController.OnMovementInput -= SetMovementDirection;
         playerController.OnMovementTypeChangeInput -= SetMovementType;
         playerController.OnWeaponChangeInput -= ChangeWeapon;
-        playerController.OnAttackInput -= TriggerIsAttacking;
+        playerController.OnAttackInput -= TriggerAttack;
     }
 
     private void Update()
@@ -48,7 +48,7 @@ public class PlayerView : MonoBehaviour
         _movementTypeSpeed = type.GetMovementSpeed();
     }
 
-    public void TriggerIsAttacking()
+    public void TriggerAttack()
     {
         animator.SetBool(attackParam, true);
     }

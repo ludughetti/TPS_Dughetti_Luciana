@@ -6,18 +6,31 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponType type;
     [SerializeField] protected float damage = 20f;
     [SerializeField] protected float cooldown = 1f;
+    [SerializeField] protected float range = 10f;
     [SerializeField] protected bool doAttackPause = false;
 
     private int _index;
+    protected float _currentCooldown = 0f;
 
     private void Start()
     {
         _index = (int) type;
     }
 
+    private void Update()
+    {
+        if (_currentCooldown > 0f)
+            _currentCooldown -= Time.deltaTime;
+    }
+
     public WeaponType GetWeaponType()
     {
         return type;
+    }
+
+    public float GetWeaponDamage()
+    {
+        return damage;
     }
 
     public int GetIndex() 
@@ -34,10 +47,16 @@ public class Weapon : MonoBehaviour
     {
         return doAttackPause;
     }
+    
+    public bool IsInCooldown()
+    {
+        return _currentCooldown <= 0f;
+    }
 
-    public virtual void Attack()
+    public virtual void Attack(LayerMask target, out GameObject targetHit)
     {
         Debug.Log($"{name}: Attack not implemented for base Weapon class");
+        targetHit = null;
     }
 
     public virtual bool HasRangedAttack()
@@ -49,5 +68,10 @@ public class Weapon : MonoBehaviour
     public virtual void Aim()
     {
         Debug.Log($"{name}: Aim not implemented for base Weapon class");
+    }
+
+    protected void TriggerWeaponCooldown()
+    {
+        _currentCooldown = cooldown;
     }
 }
