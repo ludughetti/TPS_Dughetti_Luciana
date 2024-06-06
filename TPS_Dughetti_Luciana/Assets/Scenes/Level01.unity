@@ -619,7 +619,6 @@ MonoBehaviour:
   animator: {fileID: 648472562}
   playerController: {fileID: 328311732}
   animationSpeed: 4
-  weaponAimLayer: Aim
   moveSpeedParam: move_speed
   directionXParam: dir_x
   directionZParam: dir_z
@@ -1236,14 +1235,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892671800}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.49452585, y: 0.45404878, z: 0.61725086, w: 0.41022596}
-  m_LocalPosition: {x: 0.053, y: 0.1328, z: 0.003}
+  m_LocalRotation: {x: -0.44988975, y: 0.5149046, z: 0.5674786, w: 0.45873788}
+  m_LocalPosition: {x: 0.06, y: 0.14, z: 0.007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 927277425}
   m_Father: {fileID: 1516790540}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -94.321, y: 149.541, z: -49.56598}
 --- !u!4 &913220525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2530251679569251172, guid: d229d3054dba65e4f8bf234f16508b32,

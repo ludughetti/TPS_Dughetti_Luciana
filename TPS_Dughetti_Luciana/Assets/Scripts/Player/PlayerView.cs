@@ -5,7 +5,6 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float animationSpeed = 4f;
-    [SerializeField] private string weaponAimLayer = "Aim";
     [SerializeField] private string moveSpeedParam = "move_speed";
     [SerializeField] private string directionXParam = "dir_x";
     [SerializeField] private string directionZParam = "dir_z";
@@ -13,7 +12,7 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private string attackParam = "attack";
     [SerializeField] private string weaponTypeParam = "weapon_type";
 
-    private float _movementTypeSpeed = 0f;
+    //private float _movementTypeSpeed = 0f;
     private Vector2 _currentDirection = Vector2.zero;
     private Vector2 _nextDirection = Vector2.zero;
     private Vector2 _previousDirection = Vector2.zero;
@@ -21,7 +20,7 @@ public class PlayerView : MonoBehaviour
     private void OnEnable()
     {
         playerController.OnMovementInput += SetMovementDirection;
-        playerController.OnMovementTypeChangeInput += SetMovementType;
+        //playerController.OnMovementTypeChangeInput += SetMovementType;
         playerController.OnAimInput += SetIsAiming;
         playerController.OnWeaponChangeInput += ChangeWeapon;
         playerController.OnAttackInput += TriggerAttack;
@@ -30,7 +29,7 @@ public class PlayerView : MonoBehaviour
     private void OnDisable()
     {
         playerController.OnMovementInput -= SetMovementDirection;
-        playerController.OnMovementTypeChangeInput -= SetMovementType;
+        //playerController.OnMovementTypeChangeInput -= SetMovementType;
         playerController.OnAimInput -= SetIsAiming;
         playerController.OnWeaponChangeInput -= ChangeWeapon;
         playerController.OnAttackInput -= TriggerAttack;
@@ -47,21 +46,14 @@ public class PlayerView : MonoBehaviour
         _nextDirection = input;
     }
 
-    public void SetMovementType(MovementType type)
+    /*public void SetMovementType(MovementType type)
     {
         _movementTypeSpeed = type.GetMovementSpeed();
-    }
+    }*/
 
     public void SetIsAiming(bool isAiming)
     {
         animator.SetBool(isAimingParam, isAiming);
-        ToggleWeaponAimLayer(isAiming);
-    }
-
-    private void ToggleWeaponAimLayer(bool isAiming)
-    {
-        float weight = isAiming ? 1f : 0f;
-        animator.SetLayerWeight(animator.GetLayerIndex(weaponAimLayer), weight);
     }
 
     public void TriggerAttack()
@@ -76,7 +68,8 @@ public class PlayerView : MonoBehaviour
 
     private void SetMovementAnimations()
     {
-        animator.SetFloat(moveSpeedParam, _movementTypeSpeed);
+        //animator.SetFloat(moveSpeedParam, _movementTypeSpeed);
+        animator.SetFloat(moveSpeedParam, _currentDirection.magnitude);
         animator.SetFloat(directionXParam, _currentDirection.x);
         animator.SetFloat(directionZParam, _currentDirection.y);
     }
