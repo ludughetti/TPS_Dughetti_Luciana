@@ -10,6 +10,11 @@ public class InputReader : MonoBehaviour
         playerController.HandleMovementInput(context.ReadValue<Vector2>());
     }
 
+    public void HandleMouseInput(InputAction.CallbackContext context)
+    {
+        playerController.HandleMouseInput(context.ReadValue<Vector2>());
+    }
+
     public void HandleSprintToggleInput(InputAction.CallbackContext context)
     {
         if (context.started)
