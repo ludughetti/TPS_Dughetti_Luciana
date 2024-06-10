@@ -40,7 +40,8 @@ public class Weapon : MonoBehaviour
 
     public void TogglePrefab(bool showPrefab)
     {
-        weaponPrefab.SetActive(showPrefab);
+        if(weaponPrefab != null)
+            weaponPrefab.SetActive(showPrefab);
     }
 
     public bool DoAttackPause()

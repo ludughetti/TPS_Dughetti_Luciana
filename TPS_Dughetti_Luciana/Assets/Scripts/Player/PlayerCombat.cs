@@ -6,40 +6,60 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private LayerMask enemy;
     [SerializeField] private List<Weapon> weapons;
+    [SerializeField] private Transform cameraTarget;
 
     private Weapon _activeWeapon;
+    private Weapon _unarmedWeapon;
 
     private void OnEnable()
     {
-        _activeWeapon = weapons[0];
+        _unarmedWeapon = weapons[0];
+        _activeWeapon = _unarmedWeapon;
 
-        playerController.OnWeaponChangeInput += SwitchWeapon;
         playerController.OnAttackInput += Attack;
     }
 
     private void OnDisable()
     {
-        playerController.OnWeaponChangeInput -= SwitchWeapon;
         playerController.OnAttackInput -= Attack;
     }
 
-    public bool CanSwitchWeapon(int weaponIndex)
+    public int GetWeaponIndex(int weaponIndex)
     {
-        return _activeWeapon.GetIndex() != weaponIndex;
+        return _activeWeapon.GetIndex() == weaponIndex ? _unarmedWeapon.GetIndex() : weaponIndex;
     }
 
-    public void SwitchWeapon(int index)
+    public int SwitchWeapon(int index)
     {
-        Debug.Log($"Old weapon is {_activeWeapon}, new weapon is {weapons[index - 1]}");
+        if(_activeWeapon.GetIndex() == index)
+        {
+            Debug.Log($"Same weapon {_activeWeapon}({_activeWeapon.GetIndex()}) triggered, putting weapon away.");
+            _activeWeapon.TogglePrefab(false);
+            _activeWeapon = _unarmedWeapon;
+        } else
+        {
+            Debug.Log($"Old weapon is {_activeWeapon}({_activeWeapon.GetIndex()}), new weapon is {weapons[index]}({index})");
+            _activeWeapon.TogglePrefab(false);
+            _activeWeapon = weapons[index];
+            _activeWeapon.TogglePrefab(true);
+        }
 
-        _activeWeapon.TogglePrefab(false);
-        _activeWeapon = weapons[index - 1];
-        _activeWeapon.TogglePrefab(true);
+        return _activeWeapon.GetIndex();
+    }
+
+    public bool CanAim()
+    {
+        return _activeWeapon.HasRangedAttack();
     }
 
     public void Aim()
     {
         _activeWeapon.Aim();
+    }
+
+    public bool IsPointingAtEnemy()
+    {
+        return Physics.Raycast(cameraTarget.position, cameraTarget.forward, Mathf.Infinity, enemy);
     }
 
     public void Attack()

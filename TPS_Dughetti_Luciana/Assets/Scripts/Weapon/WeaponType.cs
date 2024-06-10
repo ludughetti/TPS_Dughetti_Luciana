@@ -1,6 +1,7 @@
 public enum WeaponType 
 {
-    Melee = 1,
+    None,
+    Melee,
     Pistol,
     Rifle
 }

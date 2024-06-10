@@ -46,7 +46,6 @@ public class CameraController : MonoBehaviour
 
     public void SwitchCameraOnAim(bool isAiming)
     {
-        //mainCamera.gameObject.SetActive(!isAiming);
         aimCamera.gameObject.SetActive(isAiming);
     }
 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2154ac2c965837f4f9e6699e6b55e753
+guid: 5b246073ec7b4ba4baa437b0d0f75418
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,13 +33,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Aim
+      name: Aim On Movement
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 186
+      lastFrame: 61
       wrapMode: 0
-      orientationOffsetY: -15
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0

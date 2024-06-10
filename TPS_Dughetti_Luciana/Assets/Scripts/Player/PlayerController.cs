@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         if(_canPlayerDoActions)
             OnMovementInput.Invoke(input);
     }
+
     public void HandleMouseInput(Vector2 input)
     {
         OnMouseInput.Invoke(input);
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandleAimInput(bool isAiming)
     {
-        if (_canPlayerDoActions)
+        if (_canPlayerDoActions && playerCombat.CanAim())
             OnAimInput.Invoke(isAiming);
     }
 
@@ -44,8 +45,11 @@ public class PlayerController : MonoBehaviour
 
     public void HandleWeaponChange(int index)
     {
-        if (_canPlayerDoActions && playerCombat.CanSwitchWeapon(index))
-            OnWeaponChangeInput.Invoke(index);
+        if (_canPlayerDoActions)
+        {
+           int activeWeapon = playerCombat.SwitchWeapon(index);
+           OnWeaponChangeInput.Invoke(index);
+        }
     }
 
     public bool CanPlayerDoActions()
