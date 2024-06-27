@@ -21,9 +21,10 @@ public class MeleeWeapon : Weapon
         if (Physics.SphereCast(transform.position, damageRadius, transform.forward, out var hit, range, target))
         {
             Debug.Log($"{name}: Enemy {hit.transform.gameObject.name} was hit");
-            //OnWeaponAttack.Invoke(hit.point);
 
             targetHit = hit.transform.gameObject;
+            targetHit.GetComponent<CharacterHealth>().TakeDamage(10f);
+
             return;
         }
 
