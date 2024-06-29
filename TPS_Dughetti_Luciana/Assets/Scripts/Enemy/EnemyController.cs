@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour
     public void RemoveCharacterOnDeath()
     {
         Debug.Log($"{name}: Enemy dead");
+        gameObject.SetActive(false);
         _spawner.RemoveActiveSpawn();
 
         Destroy(gameObject);

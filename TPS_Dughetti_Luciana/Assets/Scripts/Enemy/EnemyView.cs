@@ -7,18 +7,19 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private CharacterHealth health;
     [SerializeField] private Weapon weapon;
     [SerializeField] private string isWalkingParam = "isRunning";
+    [SerializeField] private string isDeadParam = "isDead";
     [SerializeField] private string attackAnimation = "Attack";
     [SerializeField] private string deathAnimation = "Death";
 
     private void OnEnable()
     {
-        health.OnDeath += PlayDeathAnimation;
+        health.OnDeath += TriggerDeathAnimation;
         enemyController.OnAttack += PlayAttackAnimation;
     }
 
     private void OnDisable()
     {
-        health.OnDeath -= PlayDeathAnimation;
+        health.OnDeath -= TriggerDeathAnimation;
         enemyController.OnAttack -= PlayAttackAnimation;
     }
 
@@ -27,9 +28,10 @@ public class EnemyView : MonoBehaviour
         animator.SetBool(isWalkingParam, enemyController.IsRunning());
     }
 
-    public void PlayDeathAnimation()
+    public void TriggerDeathAnimation()
     {
-        animator.Play(deathAnimation);
+        //animator.Play(deathAnimation);
+        animator.SetBool(isDeadParam, true);
     }
 
     public void PlayAttackAnimation()

@@ -72,10 +72,10 @@ public class PlayerMovement : MonoBehaviour
             + new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
     }
 
-    // If character is moving forward, use full speed. Else, reduced.
+    // If character is moving straight forward, use full speed. Else, reduced.
     private void GetSpeedByDirection()
     {
-        if (_moveDirection.z > 0f)
+        if (_moveDirection.z > 0f && _moveDirection.x == 0)
             _currentMoveSpeed = movementSpeed * _movementType.GetMovementSpeed();
         else 
             _currentMoveSpeed = (movementSpeed / reduceMovementDivisor) * _movementType.GetMovementSpeed();

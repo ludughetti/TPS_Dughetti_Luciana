@@ -4,6 +4,7 @@ public class PlayerView : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerCombat playerCombat;
     [SerializeField] private float animationSpeed = 4f;
     [SerializeField] private string moveSpeedParam = "move_speed";
     [SerializeField] private string directionXParam = "dir_x";
@@ -12,7 +13,8 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private string attackParam = "attack";
     [SerializeField] private string weaponTypeParam = "weapon_type";
 
-    //private float _movementTypeSpeed = 0f;
+    private int _currentWeaponId = 0;
+    private int _nextWeaponId = 0;
     private Vector2 _currentDirection = Vector2.zero;
     private Vector2 _nextDirection = Vector2.zero;
     private Vector2 _previousDirection = Vector2.zero;
@@ -20,7 +22,6 @@ public class PlayerView : MonoBehaviour
     private void OnEnable()
     {
         playerController.OnMovementInput += SetMovementDirection;
-        //playerController.OnMovementTypeChangeInput += SetMovementType;
         playerController.OnAimInput += SetIsAiming;
         playerController.OnWeaponChangeInput += ChangeWeapon;
         playerController.OnAttackInput += TriggerAttack;
@@ -29,7 +30,6 @@ public class PlayerView : MonoBehaviour
     private void OnDisable()
     {
         playerController.OnMovementInput -= SetMovementDirection;
-        //playerController.OnMovementTypeChangeInput -= SetMovementType;
         playerController.OnAimInput -= SetIsAiming;
         playerController.OnWeaponChangeInput -= ChangeWeapon;
         playerController.OnAttackInput -= TriggerAttack;
@@ -45,11 +45,6 @@ public class PlayerView : MonoBehaviour
     {
         _nextDirection = input;
     }
-
-    /*public void SetMovementType(MovementType type)
-    {
-        _movementTypeSpeed = type.GetMovementSpeed();
-    }*/
 
     public void SetIsAiming(bool isAiming)
     {
@@ -68,7 +63,6 @@ public class PlayerView : MonoBehaviour
 
     private void SetMovementAnimations()
     {
-        //animator.SetFloat(moveSpeedParam, _movementTypeSpeed);
         animator.SetFloat(moveSpeedParam, _currentDirection.magnitude);
         animator.SetFloat(directionXParam, _currentDirection.x);
         animator.SetFloat(directionZParam, _currentDirection.y);
@@ -76,6 +70,8 @@ public class PlayerView : MonoBehaviour
 
     private void ChangeWeapon(int index)
     {
+        _nextWeaponId = index;
+        Debug.Log($"Change Weapon received. Current weapon id: {_currentWeaponId}, next weapon id: {_nextWeaponId}");
         animator.SetInteger(weaponTypeParam, index);
     }
 
@@ -115,5 +111,17 @@ public class PlayerView : MonoBehaviour
             if (currentValue <= nextValue)
                 previousValue = nextValue;
         }
+    }
+
+    public void HideWeaponOnHolster()
+    {
+        Debug.Log($"Hide weapon on holster received. Current weapon: {_currentWeaponId}, next weapon: {_nextWeaponId}");
+        playerCombat.ToggleWeaponVisibility(_currentWeaponId, false);
+    }
+
+    public void ShowWeaponOnDraw()
+    {
+        playerCombat.ToggleWeaponVisibility(_nextWeaponId, true);
+        _currentWeaponId = _nextWeaponId;
     }
 }

@@ -23,7 +23,7 @@ public class MeleeWeapon : Weapon
             Debug.Log($"{name}: Enemy {hit.transform.gameObject.name} was hit");
 
             targetHit = hit.transform.gameObject;
-            targetHit.GetComponent<CharacterHealth>().TakeDamage(10f);
+            targetHit.GetComponent<CharacterHealth>().TakeDamage(damage);
 
             return;
         }

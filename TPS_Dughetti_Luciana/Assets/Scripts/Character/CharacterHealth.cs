@@ -16,18 +16,6 @@ public class CharacterHealth : MonoBehaviour
         _health = maxHealth;
     }
 
-    [ContextMenu("TakeDamage")]
-    public void MockTakeDamage()
-    {
-        TakeDamage(10f);
-    }
-
-    [ContextMenu("Heal")]
-    public void MockHeal()
-    {
-        Heal(10f);
-    }
-
     public void TakeDamage(float damage)
     {
         Debug.Log($"{name}: {damage} damage received");

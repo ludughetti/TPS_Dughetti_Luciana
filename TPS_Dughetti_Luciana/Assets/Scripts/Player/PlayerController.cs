@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         if (_canPlayerDoActions)
         {
            int activeWeapon = playerCombat.SwitchWeapon(index);
-           OnWeaponChangeInput.Invoke(index);
+           OnWeaponChangeInput.Invoke(activeWeapon);
         }
     }
 

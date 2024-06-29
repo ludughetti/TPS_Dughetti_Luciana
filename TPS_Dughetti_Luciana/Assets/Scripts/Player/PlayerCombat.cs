@@ -31,18 +31,10 @@ public class PlayerCombat : MonoBehaviour
 
     public int SwitchWeapon(int index)
     {
-        if(_activeWeapon.GetIndex() == index)
-        {
-            Debug.Log($"Same weapon {_activeWeapon}({_activeWeapon.GetIndex()}) triggered, putting weapon away.");
-            _activeWeapon.TogglePrefab(false);
-            _activeWeapon = _unarmedWeapon;
-        } else
-        {
-            Debug.Log($"Old weapon is {_activeWeapon}({_activeWeapon.GetIndex()}), new weapon is {weapons[index]}({index})");
-            _activeWeapon.TogglePrefab(false);
-            _activeWeapon = weapons[index];
-            _activeWeapon.TogglePrefab(true);
-        }
+        Debug.Log($"Switch Weapon received. Index: {index}");
+        _activeWeapon = _activeWeapon.GetIndex() == index
+            ? _unarmedWeapon
+            : weapons[index];
 
         return _activeWeapon.GetIndex();
     }
@@ -80,5 +72,11 @@ public class PlayerCombat : MonoBehaviour
     {
         if (targetHit.TryGetComponent<CharacterHealth>(out var targetHealth))
             targetHealth.TakeDamage(_activeWeapon.GetWeaponDamage());
+    }
+
+    public void ToggleWeaponVisibility(int index, bool isWeaponVisible)
+    {
+        Debug.Log($"Toggle Weapon Visibility received. Index: {index}, isWeaponVisible: {isWeaponVisible}");
+        weapons[index].TogglePrefab(isWeaponVisible);
     }
 }
