@@ -15,19 +15,6 @@ public class InputReader : MonoBehaviour
         playerController.HandleMouseInput(context.ReadValue<Vector2>());
     }
 
-    public void HandleSprintToggleInput(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            Debug.Log($"{name}: Sprint triggered.");
-            playerController.HandleMovementTypeChangeInput(MovementType.Run);
-        } else if (context.canceled)
-        {
-            Debug.Log($"{name}: Sprint trigger finished, returning to Walk.");
-            playerController.HandleMovementTypeChangeInput(MovementType.Walk);
-        }
-    }
-
     public void HandleAimInput(InputAction.CallbackContext context)
     {
         if(context.started)
@@ -74,6 +61,15 @@ public class InputReader : MonoBehaviour
         {
             Debug.Log($"{name}: Changing to rifle weapon.");
             playerController.HandleWeaponChange((int) WeaponType.Rifle);
+        }
+    }
+
+    public void HandleJumpInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log($"{name}: Jump triggered");
+            playerController.HandleJumpInput();
         }
     }
 }

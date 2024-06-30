@@ -34,12 +34,13 @@ public class CharacterHealth : MonoBehaviour
 
     public void Heal(float healAmount)
     {
-        Debug.Log($"{name}: Healing player for {healAmount}");
+        Debug.Log($"{name}: Healing character for {healAmount}");
         _health += healAmount;
-        Debug.Log($"{name}: Player was healed, currentHP is {_health}");
 
         if (_health >= maxHealth)
             _health = maxHealth;
+
+        Debug.Log($"{name}: Character was healed, currentHP is {_health}");
 
         OnHeal.Invoke(_health);
     }

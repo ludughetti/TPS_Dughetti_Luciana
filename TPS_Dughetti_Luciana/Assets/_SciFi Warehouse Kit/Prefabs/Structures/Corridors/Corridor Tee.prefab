@@ -188,8 +188,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 18.000004, y: 0.25000054, z: 6.028638}
-  m_Center: {x: 3.0000095, y: -0.12497249, z: -2.9856842}
+  m_Size: {x: 18.000004, y: 1, z: 6.028638}
+  m_Center: {x: 3.0000095, y: -0.5, z: -2.9856842}
 --- !u!65 &6790144982036728831
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -209,8 +209,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.0538516, y: 0.25000054, z: 5.9571905}
-  m_Center: {x: 2.9777207, y: -0.12497249, z: 3.0214021}
+  m_Size: {x: 6.0538516, y: 1, z: 5.9571905}
+  m_Center: {x: 2.9777207, y: -0.5, z: 3.0214021}
 --- !u!1 &321761353807948941
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 321761353807982831}
   - component: {fileID: 321761353806655631}
   - component: {fileID: 321761353805689551}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tunnel Beams002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 2272692831498806302}
   - component: {fileID: 805506444829649104}
   - component: {fileID: 635865936459031854}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tunnel Walls002
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7657357953881361663}
   - component: {fileID: 7340603623385986122}
   - component: {fileID: 4135152878466489285}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,8 +349,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 18, y: 0.25000054, z: 18}
-  m_Center: {x: 3.0000086, y: -0.12497249, z: -3.0000045}
+  m_Size: {x: 18, y: 1, z: 18}
+  m_Center: {x: 3.0000086, y: -0.5, z: -3.0000045}
 --- !u!1 &7477967184759916837
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 7477967184759821575}
   - component: {fileID: 7477967184759051557}
   - component: {fileID: 7477967184757921765}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tunnel Walls005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 7477967184759821581}
   - component: {fileID: 7477967184759051565}
   - component: {fileID: 7477967184757921773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tunnel Beams005
   m_TagString: Untagged
   m_Icon: {fileID: 0}

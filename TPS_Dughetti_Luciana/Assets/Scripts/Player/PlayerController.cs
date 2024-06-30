@@ -7,10 +7,10 @@ public class PlayerController : MonoBehaviour
 
     public event Action<Vector2> OnMovementInput = delegate { };
     public event Action<Vector2> OnMouseInput = delegate { };
-    public event Action<MovementType> OnMovementTypeChangeInput = delegate { };
     public event Action<int> OnWeaponChangeInput = delegate { };
     public event Action<bool> OnAimInput = delegate { };
     public event Action OnAttackInput = delegate { };
+    public event Action OnJumpInput = delegate { };
 
     private bool _canPlayerDoActions = true;
 
@@ -23,12 +23,6 @@ public class PlayerController : MonoBehaviour
     public void HandleMouseInput(Vector2 input)
     {
         OnMouseInput.Invoke(input);
-    }
-
-    public void HandleMovementTypeChangeInput(MovementType type)
-    {
-        if (_canPlayerDoActions)
-            OnMovementTypeChangeInput.Invoke(type);
     }
 
     public void HandleAimInput(bool isAiming)
@@ -51,6 +45,11 @@ public class PlayerController : MonoBehaviour
            OnWeaponChangeInput.Invoke(activeWeapon);
         }
     }
+    public void HandleJumpInput()
+    {
+        if(_canPlayerDoActions)
+            OnJumpInput.Invoke();
+    }
 
     public bool CanPlayerDoActions()
     {
@@ -61,4 +60,5 @@ public class PlayerController : MonoBehaviour
     {
         _canPlayerDoActions = canPlayerDoActions;
     }
+
 }

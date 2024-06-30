@@ -8,23 +8,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float reduceMovementDivisor = 2f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private float jumpHeight = 10f;
+    [SerializeField] private float gravity = -15.0f;
+    [SerializeField] private float terminalVelocity = 53.0f;
 
     private Vector3 _moveDirection = Vector3.zero;
     private float _currentMoveSpeed = 0f;
-    private MovementType _movementType = MovementType.Walk;
     private bool _isGrounded = false;
     private float _verticalVelocity = 0f;
 
     private void OnEnable()
     {
         playerController.OnMovementInput += SetMovement;
-        playerController.OnMovementTypeChangeInput += SetMovementType;
+        playerController.OnJumpInput += Jump;
     }
 
     private void OnDisable()
     {
         playerController.OnMovementInput -= SetMovement;
-        playerController.OnMovementTypeChangeInput -= SetMovementType;
+        playerController.OnJumpInput -= Jump;
     }
 
     private void Start()
@@ -35,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         IsGrounded();
+        ApplyGravity();
 
         if (playerController.CanPlayerDoActions())
             MovePlayer();
@@ -49,19 +52,17 @@ public class PlayerMovement : MonoBehaviour
         GetSpeedByDirection();
     }
 
-    public void SetMovementType(MovementType type)
-    {
-        // Set movement type (walk, run, etc.)
-        _movementType = type;
-
-        // Calculate movement speed depending on movement type
-        GetSpeedByDirection();
-    }
-
     private void IsGrounded()
     {
         Vector3 groundCheckPosition = transform.position - new Vector3(0f, characterController.height / 2);
         _isGrounded = Physics.CheckSphere(groundCheckPosition, groundCheckRadius, groundMask);
+    }
+
+    private void ApplyGravity()
+    {
+        // Apply gravity if player is in the air
+        if (!_isGrounded && _verticalVelocity < terminalVelocity)
+            _verticalVelocity += gravity * Time.deltaTime;
     }
 
     private void MovePlayer()
@@ -76,8 +77,15 @@ public class PlayerMovement : MonoBehaviour
     private void GetSpeedByDirection()
     {
         if (_moveDirection.z > 0f && _moveDirection.x == 0)
-            _currentMoveSpeed = movementSpeed * _movementType.GetMovementSpeed();
+            _currentMoveSpeed = movementSpeed;
         else 
-            _currentMoveSpeed = (movementSpeed / reduceMovementDivisor) * _movementType.GetMovementSpeed();
+            _currentMoveSpeed = movementSpeed / reduceMovementDivisor;
+    }
+
+    public void Jump()
+    {
+        Debug.Log("Jump executed");
+        if (_isGrounded)
+            _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 }

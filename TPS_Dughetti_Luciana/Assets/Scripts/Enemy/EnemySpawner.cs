@@ -12,6 +12,13 @@ public class EnemySpawner : MonoBehaviour
 
     private float _spawnCooldown = 0f;
     private int _activeSpawns = 0;
+    private DoorController _doorController;
+
+    private void Start()
+    {
+        _doorController = GetComponent<DoorController>();
+        Debug.Log($"{name}: Door controller found? {_doorController != null}");
+    }
 
     private void Update()
     {
@@ -36,6 +43,10 @@ public class EnemySpawner : MonoBehaviour
         controller.SetSpawner(this);
 
         _activeSpawns++;
+
+        // If there's a door attached to this spawner, open it
+        if (_doorController != null)
+            _doorController.OpenDoor();
     }
 
     public void RemoveActiveSpawn()
