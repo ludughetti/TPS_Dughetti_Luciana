@@ -5,6 +5,7 @@ public class RangeWeapon : Weapon
     [SerializeField] private int maxAmmo = 100;
     [SerializeField] private Transform barrelEnd;
     [SerializeField] private Transform aimTarget;
+    [SerializeField] private ParticleSystem areaOfEffect;
 
     private int _currentAmmo = 0;
 
@@ -32,6 +33,9 @@ public class RangeWeapon : Weapon
 
         _currentAmmo--;
         weaponAudio.PlayAttackSound();
+
+        if (areaOfEffect != null)
+            areaOfEffect.Play();
 
         TriggerWeaponCooldown();
         if (Physics.Raycast(barrelEnd.position, aimTarget.forward, out RaycastHit hit, range, target))
@@ -62,5 +66,10 @@ public class RangeWeapon : Weapon
     {
         _currentAmmo += amount;
         Debug.Log($"{name}: Added {amount} ammo. Current amount: {_currentAmmo}");
+    }
+
+    public override int GetAmmoCount()
+    {
+        return _currentAmmo;
     }
 }

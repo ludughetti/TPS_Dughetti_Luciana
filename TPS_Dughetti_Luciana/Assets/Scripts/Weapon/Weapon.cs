@@ -81,4 +81,10 @@ public class Weapon : MonoBehaviour
     {
         Debug.Log($"{name}: AddAmmo not implemented for base Weapon class");
     }
+
+    public virtual int GetAmmoCount()
+    {
+        Debug.Log($"{name}: GetAmmoCount not implemented for base Weapon class");
+        return 0;
+    }
 }

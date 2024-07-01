@@ -113,6 +113,7 @@ MonoBehaviour:
   spawnArea: {fileID: 2482942045164321568}
   spawns: {fileID: 7602796253861058370}
   target: {fileID: 0}
+  gameController: {fileID: 0}
   enemyPrefab: {fileID: 3461395376885766840, guid: 53ac6265599871b49b701f8f7f7c5560,
     type: 3}
   spawnCooldown: 10
@@ -142,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 8069604122440376873}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -0.3, y: -2.18, z: -0.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

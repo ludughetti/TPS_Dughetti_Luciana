@@ -5,6 +5,7 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private Weapon weapon;
     [SerializeField] protected LayerMask target;
+    [SerializeField] private ParticleSystem areaOfEffect;
 
     private bool _hasTargetInAttackRange = false;
     private float _currentAttackCooldown = 0f;
@@ -58,5 +59,8 @@ public class EnemyCombat : MonoBehaviour
     private void Attack()
     {
         weapon.Attack(target, out GameObject targetHit);
+
+        if (areaOfEffect != null)
+            areaOfEffect.Play();
     }
 }

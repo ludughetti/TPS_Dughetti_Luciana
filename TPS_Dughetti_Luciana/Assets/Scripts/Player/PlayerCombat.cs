@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private AmmoCounter ammoCounter;
     [SerializeField] private LayerMask enemy;
     [SerializeField] private List<Weapon> weapons;
     [SerializeField] private Transform cameraTarget;
@@ -62,6 +64,9 @@ public class PlayerCombat : MonoBehaviour
         Debug.Log("Combat attack triggered");
         _activeWeapon.Attack(enemy, out var targetHit);
 
+        if(_activeWeapon.HasRangedAttack())
+            ammoCounter.UpdateAmmoCounter(_activeWeapon.GetAmmoCount());
+
         Debug.Log("Combat damage enemy triggered");
         if (targetHit != null)
             DamageEnemy(targetHit);
@@ -86,5 +91,13 @@ public class PlayerCombat : MonoBehaviour
         {
             weapon.AddAmmo(amount);
         }
+
+        if(_activeWeapon.HasRangedAttack())
+            ammoCounter.UpdateAmmoCounter(_activeWeapon.GetAmmoCount());
+    }
+
+    public int GetActiveWeaponAmmoCount()
+    {
+        return _activeWeapon.GetAmmoCount();
     }
 }

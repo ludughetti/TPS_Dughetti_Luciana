@@ -9,7 +9,6 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private string isWalkingParam = "isRunning";
     [SerializeField] private string isDeadParam = "isDead";
     [SerializeField] private string attackAnimation = "Attack";
-    [SerializeField] private string deathAnimation = "Death";
 
     private void OnEnable()
     {
