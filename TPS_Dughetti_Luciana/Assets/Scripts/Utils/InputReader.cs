@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+
+    public event Action OnPauseInput = delegate { };
+    public event Action OnVolumeUpInput = delegate { };
+    public event Action OnVolumeDownInput = delegate { };
 
     public void HandleMovementInput(InputAction.CallbackContext context)
     {
@@ -71,5 +76,25 @@ public class InputReader : MonoBehaviour
             Debug.Log($"{name}: Jump triggered");
             playerController.HandleJumpInput();
         }
+    }
+
+    public void HandlePauseInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            OnPauseInput.Invoke();
+    }
+
+    public void HandleVolumeUpInput(InputAction.CallbackContext context)
+    {
+        Debug.Log("Volume up");
+        if (context.started)
+            OnVolumeUpInput.Invoke();
+    }
+
+    public void HandleVolumeDownInput(InputAction.CallbackContext context)
+    {
+        Debug.Log("Volume down");
+        if (context.started)
+            OnVolumeDownInput.Invoke();
     }
 }

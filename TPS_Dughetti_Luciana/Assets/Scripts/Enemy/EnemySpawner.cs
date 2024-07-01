@@ -5,7 +5,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform spawnArea;
     [SerializeField] private Transform spawns;
     [SerializeField] private Transform target;
-    //[SerializeField] private GameController gameController;
+    [SerializeField] private GameController gameController;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float spawnCooldown = 5f;
     [SerializeField] private int maxActiveSpawns = 5;
@@ -52,6 +52,6 @@ public class EnemySpawner : MonoBehaviour
     public void RemoveActiveSpawn()
     {
         _activeSpawns--;
-        //gameController.AddKillToCounter();
+        gameController.AddKillToCounter();
     }
 }

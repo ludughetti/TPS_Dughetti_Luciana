@@ -17,6 +17,8 @@ public class MeleeWeapon : Weapon
         }
 
         _currentCooldown = cooldown;
+        if(weaponAudio != null)
+            weaponAudio.PlayAttackSound();
 
         if (Physics.SphereCast(transform.position, damageRadius, transform.forward, out var hit, range, target))
         {

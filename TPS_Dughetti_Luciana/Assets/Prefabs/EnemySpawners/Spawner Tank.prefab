@@ -82,10 +82,10 @@ MonoBehaviour:
   spawnArea: {fileID: 5634630387461015502}
   spawns: {fileID: 6379563985199820108}
   target: {fileID: 0}
-  enemyPrefab: {fileID: 3461395376885766840, guid: 85ff2c4eeae453442ac888395fca0290,
+  enemyPrefab: {fileID: 3461395376885766840, guid: da9538a6346e21248b78480f42e2ef8c,
     type: 3}
-  spawnCooldown: 5
-  maxActiveSpawns: 5
+  spawnCooldown: 25
+  maxActiveSpawns: 2
 --- !u!1 &4320209811065454795
 GameObject:
   m_ObjectHideFlags: 0

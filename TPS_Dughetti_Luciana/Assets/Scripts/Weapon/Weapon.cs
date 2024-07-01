@@ -4,6 +4,7 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] private GameObject weaponPrefab;
     [SerializeField] protected WeaponType type;
+    [SerializeField] protected WeaponAudio weaponAudio;
     [SerializeField] protected float damage = 20f;
     [SerializeField] protected float cooldown = 1f;
     [SerializeField] protected float range = 10f;
