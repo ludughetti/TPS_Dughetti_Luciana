@@ -71,7 +71,6 @@ public class PlayerView : MonoBehaviour
     private void ChangeWeapon(int index)
     {
         _nextWeaponId = index;
-        Debug.Log($"Change Weapon received. Current weapon id: {_currentWeaponId}, next weapon id: {_nextWeaponId}");
         animator.SetInteger(weaponTypeParam, index);
     }
 
@@ -121,6 +120,7 @@ public class PlayerView : MonoBehaviour
 
     public void ShowWeaponOnDraw()
     {
+        Debug.Log($"Show weapon on draw received. Current weapon: {_currentWeaponId}, next weapon: {_nextWeaponId}");
         playerCombat.ToggleWeaponVisibility(_nextWeaponId, true);
         _currentWeaponId = _nextWeaponId;
     }

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed0ab5a023a0a64ca8964f69be572cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerType: 0
+  spawnerType: 1
   item: {fileID: 6887981370312521037}
   itemCooldown: 10
 --- !u!1 &6887981370312521037

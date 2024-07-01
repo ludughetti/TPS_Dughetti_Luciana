@@ -75,4 +75,9 @@ public class Weapon : MonoBehaviour
     {
         _currentCooldown = cooldown;
     }
+
+    public virtual void AddAmmo(int amount)
+    {
+        Debug.Log($"{name}: AddAmmo not implemented for base Weapon class");
+    }
 }

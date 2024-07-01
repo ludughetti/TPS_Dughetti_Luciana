@@ -31,7 +31,6 @@ public class PlayerCombat : MonoBehaviour
 
     public int SwitchWeapon(int index)
     {
-        Debug.Log($"Switch Weapon received. Index: {index}");
         _activeWeapon = _activeWeapon.GetIndex() == index
             ? _unarmedWeapon
             : weapons[index];
@@ -78,5 +77,14 @@ public class PlayerCombat : MonoBehaviour
     {
         Debug.Log($"Toggle Weapon Visibility received. Index: {index}, isWeaponVisible: {isWeaponVisible}");
         weapons[index].TogglePrefab(isWeaponVisible);
+    }
+
+    public void AddAmmoToAllRangedWeapons(int amount)
+    {
+        Debug.Log("Adding ammo to all weapons");
+        foreach(Weapon weapon in weapons)
+        {
+            weapon.AddAmmo(amount);
+        }
     }
 }

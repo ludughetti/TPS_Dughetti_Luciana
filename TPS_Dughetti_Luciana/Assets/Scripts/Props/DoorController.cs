@@ -21,14 +21,12 @@ public class DoorController : MonoBehaviour
 
     public void OpenDoor()
     {
-        Debug.Log($"{name}: Opening door");
         _nextVerticalPosition = openVerticalPosition;
         StartCoroutine(HandleOpenDoor());
     }
 
     private void CloseDoor()
     {
-        Debug.Log($"{name}: Closing door");
         _nextVerticalPosition = closeVerticalPosition;
         StartCoroutine(HandleCloseDoor());
     }
