@@ -38,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemy()
     {
         GameObject enemy = Instantiate(enemyPrefab, spawnArea.position, Quaternion.identity, spawns);
+        enemy.SetActive(true);
         EnemyController controller = enemy.GetComponent<EnemyController>();
         controller.SetPlayer(target);
         controller.SetSpawner(this);
