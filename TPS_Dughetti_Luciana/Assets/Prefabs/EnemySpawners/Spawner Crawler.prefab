@@ -157,6 +157,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643859787535857397}
     m_Modifications:
+    - target: {fileID: 1172402629058944016, guid: 53ac6265599871b49b701f8f7f7c5560,
+        type: 3}
+      propertyPath: enemyHealth
+      value: 
+      objectReference: {fileID: 8316104701962939239}
+    - target: {fileID: 2045102691907239352, guid: 53ac6265599871b49b701f8f7f7c5560,
+        type: 3}
+      propertyPath: attackAnimation
+      value: isAttacking
+      objectReference: {fileID: 0}
     - target: {fileID: 3461395376885766840, guid: 53ac6265599871b49b701f8f7f7c5560,
         type: 3}
       propertyPath: m_Name
@@ -295,6 +305,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 0}
+--- !u!114 &8316104701962939239 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4019997345206470396, guid: 53ac6265599871b49b701f8f7f7c5560,
+    type: 3}
+  m_PrefabInstance: {fileID: 4945334347335953819}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8405972701592418083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c47333d3558de48b01dd0d14e6ff48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8405972701592418083 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3461395376885766840, guid: 53ac6265599871b49b701f8f7f7c5560,

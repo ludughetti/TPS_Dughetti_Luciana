@@ -58,6 +58,8 @@ public class GameController : MonoBehaviour
 
     public void TogglePauseScreen()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         pauseController.TogglePauseScreen();
     }
 

@@ -20,7 +20,7 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (_currentCooldown > 0f)
+        if (IsInCooldown())
             _currentCooldown -= Time.deltaTime;
     }
 
@@ -52,7 +52,7 @@ public class Weapon : MonoBehaviour
     
     public bool IsInCooldown()
     {
-        return _currentCooldown <= 0f;
+        return _currentCooldown > 0f;
     }
 
     public virtual void Attack(LayerMask target, out GameObject targetHit)

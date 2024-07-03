@@ -22,4 +22,10 @@ public class MainAudioManager : MonoBehaviour
         volumeSlider.value -= volumeChangeAmount;
         OnVolumeChange.Invoke(volumeSlider.value);
     }
+
+    public void UpdateVolumeOnSliderChange()
+    {
+        Debug.Log("Volume changed in slider");
+        OnVolumeChange(volumeSlider.value);
+    }
 }

@@ -8,7 +8,6 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private ParticleSystem areaOfEffect;
 
     private bool _hasTargetInAttackRange = false;
-    private float _currentAttackCooldown = 0f;
 
     private void OnEnable()
     {
@@ -20,12 +19,6 @@ public class EnemyCombat : MonoBehaviour
         enemyController.OnAttack -= Attack;
     }
 
-    private void Update()
-    {
-        if (IsAttackOnCooldown())
-            _currentAttackCooldown -= Time.deltaTime;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -33,14 +26,14 @@ public class EnemyCombat : MonoBehaviour
             Debug.Log($"{name}: player found");
             _hasTargetInAttackRange = true;
 
-            if (!IsAttackOnCooldown())
+            if (!weapon.IsInCooldown())
                 enemyController.TriggerAttack();
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (_hasTargetInAttackRange && !IsAttackOnCooldown()
+        if (_hasTargetInAttackRange && !weapon.IsInCooldown()
                 && other.CompareTag("Player"))
             enemyController.TriggerAttack();
     }
@@ -49,11 +42,6 @@ public class EnemyCombat : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             _hasTargetInAttackRange = false;
-    }
-
-    private bool IsAttackOnCooldown()
-    {
-        return _currentAttackCooldown > 0f;
     }
 
     private void Attack()

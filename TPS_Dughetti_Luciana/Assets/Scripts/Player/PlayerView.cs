@@ -5,6 +5,7 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerCombat playerCombat;
+    [SerializeField] private CharacterHealth characterHealth;
     [SerializeField] private float animationSpeed = 4f;
     [SerializeField] private string moveSpeedParam = "move_speed";
     [SerializeField] private string directionXParam = "dir_x";
@@ -12,6 +13,7 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private string isAimingParam = "is_aiming";
     [SerializeField] private string attackParam = "attack";
     [SerializeField] private string weaponTypeParam = "weapon_type";
+    [SerializeField] private string isDeadParam = "is_dead";
 
     private int _currentWeaponId = 0;
     private int _nextWeaponId = 0;
@@ -25,6 +27,7 @@ public class PlayerView : MonoBehaviour
         playerController.OnAimInput += SetIsAiming;
         playerController.OnWeaponChangeInput += ChangeWeapon;
         playerController.OnAttackInput += TriggerAttack;
+        characterHealth.OnDeath += SetIsDead;
     }
 
     private void OnDisable()
@@ -33,6 +36,7 @@ public class PlayerView : MonoBehaviour
         playerController.OnAimInput -= SetIsAiming;
         playerController.OnWeaponChangeInput -= ChangeWeapon;
         playerController.OnAttackInput -= TriggerAttack;
+        characterHealth.OnDeath -= SetIsDead;
     }
 
     private void Update()
@@ -123,5 +127,10 @@ public class PlayerView : MonoBehaviour
         Debug.Log($"Show weapon on draw received. Current weapon: {_currentWeaponId}, next weapon: {_nextWeaponId}");
         playerCombat.ToggleWeaponVisibility(_nextWeaponId, true);
         _currentWeaponId = _nextWeaponId;
+    }
+
+    public void SetIsDead()
+    {
+        animator.SetBool(isDeadParam, true);
     }
 }

@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameController gameController;
     [SerializeField] private PlayerCombat playerCombat;
+    [SerializeField] private CharacterHealth characterHealth;
 
     public event Action<Vector2> OnMovementInput = delegate { };
     public event Action<Vector2> OnMouseInput = delegate { };
@@ -13,6 +16,16 @@ public class PlayerController : MonoBehaviour
     public event Action OnJumpInput = delegate { };
 
     private bool _canPlayerDoActions = true;
+
+    private void OnEnable()
+    {
+        characterHealth.OnDeath += TriggerEndgameOnDeath;
+    }
+
+    private void OnDisable()
+    {
+        characterHealth.OnDeath -= TriggerEndgameOnDeath;
+    }
 
     public void HandleMovementInput(Vector2 input)
     {
@@ -61,4 +74,14 @@ public class PlayerController : MonoBehaviour
         _canPlayerDoActions = canPlayerDoActions;
     }
 
+    private void TriggerEndgameOnDeath()
+    {
+        StartCoroutine(TriggerEndgame());
+    }
+
+    private IEnumerator TriggerEndgame()
+    {
+        yield return new WaitForSeconds(4);
+        gameController.TriggerEndgameScreen(false);
+    }
 }

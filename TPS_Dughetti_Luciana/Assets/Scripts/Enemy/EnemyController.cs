@@ -1,16 +1,30 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private CharacterHealth enemyHealth;
 
     public Action OnAttack = delegate { };
 
     private Transform _player;
     private EnemySpawner _spawner;
     private bool _isRunning = true;
+    private bool _isDead = false;
+
+    private void OnEnable()
+    {
+        enemyHealth.OnDeath += DisableOnDeath;
+    }
+
+    private void OnDisable()
+    {
+        enemyHealth.OnDeath -= DisableOnDeath;
+    }
 
     void Update()
     {
@@ -28,8 +42,9 @@ public class EnemyController : MonoBehaviour
         _isRunning = canMove;
     }
 
-    public void RemoveCharacterOnDeath()
+    private IEnumerator RemoveCharacterOnDeath()
     {
+        yield return new WaitForSeconds(3);
         Debug.Log($"{name}: Enemy dead");
         gameObject.SetActive(false);
         _spawner.RemoveActiveSpawn();
@@ -49,6 +64,17 @@ public class EnemyController : MonoBehaviour
 
     public virtual void TriggerAttack()
     {
-        OnAttack.Invoke();
+        if (!_isDead)
+        {
+            CanMove(false);
+            OnAttack.Invoke();
+        }
+    }
+
+    private void DisableOnDeath()
+    {
+        _isDead = true;
+        CanMove(false);
+        StartCoroutine(RemoveCharacterOnDeath());
     }
 }
